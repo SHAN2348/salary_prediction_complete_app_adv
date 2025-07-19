@@ -9,21 +9,24 @@ from sklearn.pipeline import Pipeline
 
 # Sample dataset
 data = pd.DataFrame({
-    'YearsExperience': [1, 2, 3, 4, 5, 6, 7],
-    'Education': ['Bachelors', 'Masters', 'PhD', 'Bachelors', 'Masters', 'PhD', 'Bachelors'],
-    'JobTitle': ['Developer', 'Data Scientist', 'Manager', 'Developer', 'Manager', 'Data Scientist', 'Developer'],
-    'Company': ['Google', 'Amazon', 'Microsoft', 'Amazon', 'Google', 'Meta', 'Meta'],
-    'Location': ['New York', 'San Francisco', 'Seattle', 'Austin', 'Seattle', 'New York', 'Austin'],
-    'Salary': [60000, 80000, 120000, 65000, 115000, 130000, 70000]
+    'YearsExperience': [1, 2, 3, 4, 5, 6, 7, 8 ],
+    'Education': ['Bachelors', 'Masters', 'PhD', 'Bachelors', 'Masters', 'PhD', 'Bachelors', 'Diploma'],
+    'Gender': ['Male', 'Female', 'Male', 'Female', 'Male', 'Female', 'Male', 'Other'],
+    'Age':[25, 26, 27, 28, 29, 30, 31, 32],
+    'JobTitle': ['Developer', 'Data Scientist', 'Data Engineer', 'Computer forensics analyst', 'Manager', 'Data Scientist', 'Developer', 'HR', ],
+    'Company': ['Google', 'Amazon', 'Microsoft', 'IBM', 'Google', 'Meta', 'Infosys', 'Wipro'],
+    'Location': ['New York', 'San Francisco', 'Seattle', 'Austin', 'US', 'Russia', 'Austin', 'India'],
+    'Salary': [60000, 80000, 120000, 65000, 115000, 130000, 70000, 95000]
+    
 })
 
 # Train model
 X = data.drop('Salary', axis=1)
 y = data['Salary']
-categorical_features = ['Education', 'JobTitle', 'Company', 'Location']
+categorical_features = ['Education', 'JobTitle', 'Company', 'Location','Gender']
 preprocessor = ColumnTransformer([
     ('cat', OneHotEncoder(), categorical_features),
-    ('num', 'passthrough', ['YearsExperience'])
+    ('num', 'passthrough', ['YearsExperience', 'Age'])
 ])
 model = Pipeline([
     ('preprocessor', preprocessor),
@@ -46,6 +49,8 @@ with col1:
     st.header("📥 Input")
     experience = st.slider("Years of Experience", 0, 20, 2)
     education = st.selectbox("Education Level", data['Education'].unique())
+    age = st.slider("Age", 18, 65, 25)
+    gender = st.selectbox("Gender", data['Gender'].unique())
     job_title = st.selectbox("Job Title", data['JobTitle'].unique())
     company = st.selectbox("Company", data['Company'].unique())
     location = st.selectbox("Location", data['Location'].unique())
@@ -56,6 +61,8 @@ with col2:
         input_df = pd.DataFrame({
             'YearsExperience': [experience],
             'Education': [education],
+            'Age': [age],
+            'Gender': [gender],
             'JobTitle': [job_title],
             'Company': [company],
             'Location': [location]
