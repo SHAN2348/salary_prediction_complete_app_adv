@@ -82,7 +82,7 @@ st.markdown("---")
 st.subheader("👨‍💻 Developer Contact")
 st.markdown("""
 **Name:** Shan Shareef 
-**Email:** `Shan_dev@example.com`  
+**Email:** `SSdev@example.com`  
 **GitHub:** [github.com/SHAN2348](https://github.com/SHAN2348)  
 **Location:** India
 """)
